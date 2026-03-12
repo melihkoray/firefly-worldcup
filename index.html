@@ -224,12 +224,14 @@
             color: var(--white);
             margin-bottom: 20px;
             letter-spacing: -1.5px;
+            min-height: 3.2em;
         }
 
         .hero h1 .accent {
             color: var(--green);
-            display: inline;
-            position: relative;
+            display: inline-block;
+            min-width: 280px;
+            text-align: left;
         }
 
         .typewriter-cursor {
@@ -1305,14 +1307,15 @@
                 }
                 setTimeout(typewriter, 120);
             } else {
-                typeEl.textContent = current.substring(0, charIndex - 1);
                 charIndex--;
                 if (charIndex === 0) {
+                    typeEl.innerHTML = '\u00A0';
                     isDeleting = false;
                     wordIndex = (wordIndex + 1) % words.length;
                     setTimeout(typewriter, 400);
                     return;
                 }
+                typeEl.textContent = current.substring(0, charIndex);
                 setTimeout(typewriter, 60);
             }
         }
