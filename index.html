@@ -112,7 +112,11 @@
             align-items: center;
         }
 
-        .logo img { height: 18px; width: auto; }
+        .logo img { height: 18px; width: auto; transition: filter 0.4s ease; }
+
+        header.scrolled .logo img {
+            filter: brightness(0);
+        }
 
         .nav-links { display: flex; align-items: center; gap: 28px; }
 
@@ -159,6 +163,12 @@
         .hero-bg {
             position: absolute; inset: 0;
             background: url('img/hero-banner.jpg') center 60% / cover no-repeat;
+            animation: hero-zoom 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes hero-zoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
         }
 
         .hero-overlay {
@@ -217,7 +227,18 @@
         }
 
         .hero h1 .accent {
-            color: var(--green);
+            background: linear-gradient(90deg, var(--green), #a8e6cf, var(--green-dark), var(--green));
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 6s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .hero-sub {
@@ -227,6 +248,58 @@
             max-width: 480px;
             line-height: 1.7;
             margin-bottom: 32px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            animation: float 2.5s ease-in-out infinite;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .scroll-mouse {
+            width: 24px;
+            height: 38px;
+            border-radius: 12px;
+            border: 2px solid rgba(255,255,255,0.3);
+            position: relative;
+        }
+
+        .scroll-mouse::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 8px;
+            border-radius: 2px;
+            background: var(--green);
+            animation: scroll-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes scroll-dot {
+            0% { opacity: 1; top: 6px; }
+            100% { opacity: 0; top: 20px; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-8px); }
         }
 
         .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -351,17 +424,13 @@
             text-align: center;
             padding: 40px 24px;
             border-radius: 16px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: transparent;
+            border: none;
             transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
         }
 
         .stat-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
-            border-color: var(--green);
-            background: rgba(109, 198, 151, 0.08);
         }
 
         .stat-number {
@@ -487,13 +556,7 @@
         .coverage-card-body { padding: 28px 24px; }
 
         .coverage-icon {
-            width: 40px; height: 40px;
-            border-radius: 10px;
-            background: var(--green-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
+            display: none;
         }
 
         .coverage-card h3 {
@@ -544,19 +607,10 @@
             box-shadow: 0 12px 36px rgba(0,0,0,0.06);
         }
 
-        .how-step:hover .step-icon {
-            background: var(--green);
-        }
-
-        .how-step:hover .step-icon svg { stroke: var(--white); }
-
-        .step-icon { transition: background 0.3s ease; }
-        .step-icon svg { transition: stroke 0.3s ease; }
+        .how-step:hover .step-icon svg { stroke: var(--green-dark); }
 
         .step-icon {
-            width: 64px; height: 64px;
-            border-radius: 50%;
-            background: var(--green-light);
+            width: 72px; height: 72px;
             margin: 0 auto 20px;
             display: flex;
             align-items: center;
@@ -564,11 +618,13 @@
             position: relative;
         }
 
+        .step-icon svg {
+            width: 48px !important;
+            height: 48px !important;
+        }
+
         .step-icon .ring {
-            position: absolute; inset: -6px;
-            border-radius: 50%;
-            border: 1.5px solid var(--green);
-            opacity: 0.2;
+            display: none;
         }
 
         .step-label {
@@ -612,8 +668,8 @@
 
         .prg-card {
             border-radius: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: transparent;
+            border: none;
             overflow: hidden;
             position: relative;
         }
@@ -630,14 +686,41 @@
         .prg-content .section-title { color: var(--white); }
         .prg-content .section-desc { color: var(--gray-400); }
 
-        .prg-right { text-align: center; }
+        .prg-right {
+            text-align: center;
+            position: relative;
+            width: 180px;
+            height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .prg-right::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: rgba(109, 198, 151, 0.08);
+            border: 1px solid rgba(109, 198, 151, 0.15);
+        }
+
+        .prg-right::after {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            border: 1px solid rgba(109, 198, 151, 0.06);
+        }
 
         .prg-big-num {
-            font-size: 4.5rem;
+            font-size: 5.5rem;
             font-weight: 900;
             color: var(--green);
             line-height: 1;
             margin-bottom: 4px;
+            position: relative;
         }
 
         .prg-big-label {
@@ -646,6 +729,7 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--gray-400);
+            position: relative;
         }
 
         /* ========== HOST CITIES ========== */
@@ -897,6 +981,10 @@
                     <a href="#coverage" class="btn-outline-light">Explore Coverage</a>
                 </div>
             </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse"></div>
+            <span>Scroll</span>
         </div>
     </section>
 
