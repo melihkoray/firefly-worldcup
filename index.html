@@ -411,7 +411,7 @@
 
         .stats-header {
             text-align: center;
-            margin-bottom: 56px;
+            margin-bottom: 36px;
             position: relative;
             z-index: 1;
         }
@@ -442,11 +442,11 @@
         }
 
         .stat-number {
-            font-size: clamp(2.8rem, 4.5vw, 3.8rem);
+            font-size: clamp(3.5rem, 6vw, 5rem);
             font-weight: 800;
             color: var(--green);
             line-height: 1;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         .stat-text {
@@ -1252,12 +1252,32 @@
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
         reveals.forEach(el => observer.observe(el));
 
-        // Smooth scroll
+        // Smooth scroll with ease
+        function smoothScrollTo(targetY, duration) {
+            const startY = window.scrollY;
+            const diff = targetY - startY;
+            const start = performance.now();
+            function ease(t) {
+                return t < 0.5
+                    ? 4 * t * t * t
+                    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+            function step(now) {
+                const p = Math.min((now - start) / duration, 1);
+                window.scrollTo(0, startY + diff * ease(p));
+                if (p < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+
         document.querySelectorAll('a[href^="#"]').forEach(a => {
             a.addEventListener('click', e => {
                 e.preventDefault();
                 const target = document.querySelector(a.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (target) {
+                    const y = target.getBoundingClientRect().top + window.scrollY;
+                    smoothScrollTo(y, 1200);
+                }
             });
         });
 
