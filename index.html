@@ -227,18 +227,26 @@
         }
 
         .hero h1 .accent {
-            background: linear-gradient(90deg, var(--green), #a8e6cf, var(--green-dark), var(--green));
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: shimmer 6s ease-in-out infinite;
+            color: var(--green);
+            display: inline;
+            position: relative;
         }
 
-        @keyframes shimmer {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .typewriter-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 0.9em;
+            background: var(--green);
+            margin-left: 4px;
+            vertical-align: baseline;
+            position: relative;
+            top: 0.05em;
+            animation: blink-cursor 0.7s step-end infinite;
+        }
+
+        @keyframes blink-cursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         .hero-sub {
@@ -971,7 +979,7 @@
                     <div class="live-dot"></div>
                     FIFA World Cup 2026 &bull; June 11 &ndash; July 19
                 </div>
-                <h1>Where the City Becomes the <span class="accent">Stadium</span></h1>
+                <h1>Where the City Becomes the <span class="accent" id="typewriter"></span><span class="typewriter-cursor"></span></h1>
                 <p class="hero-sub">In 2026, the World Cup won't just be watched — it will be experienced at city scale. Firefly puts your brand in motion across every host city.</p>
                 <div class="hero-ctas">
                     <a href="#contact" class="btn-primary">
@@ -1276,6 +1284,40 @@
             });
         }, { threshold: 0.5 });
         counters.forEach(c => countObs.observe(c));
+
+        // Typewriter effect
+        const typeEl = document.getElementById('typewriter');
+        const words = ['Stadium', 'Stage', 'Arena', 'Experience'];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typewriter() {
+            const current = words[wordIndex];
+
+            if (!isDeleting) {
+                typeEl.textContent = current.substring(0, charIndex + 1);
+                charIndex++;
+                if (charIndex === current.length) {
+                    isDeleting = true;
+                    setTimeout(typewriter, 2000);
+                    return;
+                }
+                setTimeout(typewriter, 120);
+            } else {
+                typeEl.textContent = current.substring(0, charIndex - 1);
+                charIndex--;
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    wordIndex = (wordIndex + 1) % words.length;
+                    setTimeout(typewriter, 400);
+                    return;
+                }
+                setTimeout(typewriter, 60);
+            }
+        }
+
+        typewriter();
     </script>
 
 </body>
