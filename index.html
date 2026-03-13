@@ -420,6 +420,21 @@
         .stats-header .section-title { color: var(--white); }
         .stats-header .section-desc { margin: 0 auto; color: var(--gray-400); }
 
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .gradient-move {
+            background: linear-gradient(90deg, #5ab385, #a8e6c3, #6dc697, #5ab385);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1089,14 +1104,14 @@
         </div>
     </section>
 
-    <div style="max-width:900px;margin:0 auto;padding:0 24px;"><hr style="border:none;height:3px;background:var(--green);border-radius:2px;"></div>
+    <div style="width:100%;height:3px;background:linear-gradient(90deg, #5ab385, #6dc697, #a8e6c3, #6dc697, #5ab385);"></div>
 
     <!-- STATS -->
     <section class="stats" id="impact">
         <div class="container">
             <div class="stats-header">
                 <div class="section-label reveal">Proven Urban Impact</div>
-                <h2 class="section-title reveal reveal-d1">The Numbers That Move Brands</h2>
+                <h2 class="section-title reveal reveal-d1">The Numbers That <span class="gradient-move">Move</span> Brands</h2>
                 <p class="section-desc reveal reveal-d2">Out-of-home advertising during major sporting events drives unprecedented engagement and local spending.</p>
             </div>
             <div class="stats-grid">
