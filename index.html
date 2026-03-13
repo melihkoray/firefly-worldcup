@@ -178,6 +178,41 @@
                 linear-gradient(to bottom, transparent 70%, var(--dark) 100%);
         }
 
+        /* Confetti */
+        .confetti-container {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            opacity: 0;
+            animation: confettiFall linear infinite;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .confetti:nth-child(1) { left: 5%; width: 6px; height: 6px; background: #6dc697; animation-duration: 8s; animation-delay: 0s; border-radius: 50%; }
+        .confetti:nth-child(2) { left: 15%; width: 5px; height: 10px; background: rgba(109,198,151,0.5); animation-duration: 10s; animation-delay: 1.5s; }
+        .confetti:nth-child(3) { left: 28%; width: 7px; height: 7px; background: rgba(255,255,255,0.2); animation-duration: 9s; animation-delay: 0.8s; border-radius: 50%; }
+        .confetti:nth-child(4) { left: 40%; width: 4px; height: 12px; background: #5ab385; animation-duration: 11s; animation-delay: 2.2s; }
+        .confetti:nth-child(5) { left: 52%; width: 8px; height: 5px; background: rgba(109,198,151,0.4); animation-duration: 8.5s; animation-delay: 0.3s; }
+        .confetti:nth-child(6) { left: 65%; width: 6px; height: 6px; background: rgba(255,255,255,0.15); animation-duration: 12s; animation-delay: 3s; border-radius: 50%; }
+        .confetti:nth-child(7) { left: 75%; width: 5px; height: 9px; background: #6dc697; animation-duration: 9.5s; animation-delay: 1s; }
+        .confetti:nth-child(8) { left: 88%; width: 7px; height: 4px; background: rgba(109,198,151,0.35); animation-duration: 10.5s; animation-delay: 2.8s; }
+        .confetti:nth-child(9) { left: 35%; width: 5px; height: 5px; background: rgba(255,255,255,0.12); animation-duration: 13s; animation-delay: 4s; border-radius: 50%; }
+        .confetti:nth-child(10) { left: 58%; width: 4px; height: 8px; background: #5ab385; animation-duration: 11.5s; animation-delay: 1.8s; }
+
         .hero-content {
             position: relative; z-index: 2;
             max-width: var(--max-width);
@@ -948,12 +983,85 @@
             position: relative;
         }
 
-        .final-cta .cta-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
+        .contact-form {
+            max-width: 520px;
+            margin: 0 auto;
+            text-align: left;
             position: relative;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gray-200);
+            margin-bottom: 8px;
+        }
+
+        .req { color: var(--green); }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--dark-700);
+            background: var(--dark-800);
+            color: var(--white);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--gray-500);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--green);
+        }
+
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        .form-group select option {
+            background: var(--dark-800);
+            color: var(--white);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-submit {
+            width: 100%;
+            justify-content: center;
+            padding: 14px 24px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
         }
 
         /* ========== FOOTER ========== */
@@ -1081,6 +1189,12 @@
     <section class="hero">
         <div class="hero-bg"></div>
         <div class="hero-overlay"></div>
+        <div class="confetti-container">
+            <div class="confetti"></div><div class="confetti"></div><div class="confetti"></div>
+            <div class="confetti"></div><div class="confetti"></div><div class="confetti"></div>
+            <div class="confetti"></div><div class="confetti"></div><div class="confetti"></div>
+            <div class="confetti"></div>
+        </div>
         <div class="hero-content">
             <div class="hero-inner">
                 <div class="hero-badge">
@@ -1378,14 +1492,46 @@
         <div class="container">
             <div class="section-label reveal" style="justify-content: center;">Get Started</div>
             <h2 class="reveal reveal-d1">Ready to <span class="gradient-move">Own</span> the Global Soccer Tournament?</h2>
-            <p class="section-desc reveal reveal-d2">Connect with your Firefly rep to start planning your FIFA World Cup 2026 campaign strategy today.</p>
-            <div class="cta-buttons reveal reveal-d3">
-                <a href="https://www.fireflyon.com/contact" class="btn-primary" target="_blank" rel="noopener">
-                    Contact Sales
+            <p class="section-desc reveal reveal-d2">To best serve you, we'll just need a bit of info.</p>
+            <form class="contact-form reveal reveal-d3" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="contact-role">I'm a/an... <span class="req">*</span></label>
+                    <select id="contact-role" required>
+                        <option value="" disabled selected>Select one</option>
+                        <option>Advertiser/Agency Rep</option>
+                        <option>Partnership/Business Development Rep</option>
+                        <option>Driver</option>
+                        <option>Rideshare/Delivery/Taxi/Courier Fleet</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="contact-name">First & Last Name <span class="req">*</span></label>
+                    <input type="text" id="contact-name" placeholder="John Doe" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contact-phone">Phone Number <span class="req">*</span></label>
+                        <input type="tel" id="contact-phone" placeholder="+1 (555) 000-0000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email Address <span class="req">*</span></label>
+                        <input type="email" id="contact-email" placeholder="john@company.com" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contact-location">Location <span class="req">*</span></label>
+                    <input type="text" id="contact-location" placeholder="City, State">
+                </div>
+                <div class="form-group">
+                    <label for="contact-message">Message</label>
+                    <textarea id="contact-message" rows="3" placeholder="Tell us about your campaign goals..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary form-submit">
+                    Submit
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-                <a href="https://www.fireflyon.com/blog" class="btn-outline" target="_blank" rel="noopener">Read the Blog</a>
-            </div>
+                </button>
+            </form>
         </div>
     </section>
 
