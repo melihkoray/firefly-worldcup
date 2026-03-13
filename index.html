@@ -829,6 +829,43 @@
             line-height: 1.2;
         }
 
+        .cities-intl-label {
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--green);
+            margin: 32px auto 14px;
+            max-width: 920px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .cities-intl-label::before,
+        .cities-intl-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--gray-200);
+        }
+
+        .cities-grid-intl {
+            grid-template-columns: repeat(2, 1fr) !important;
+            max-width: 460px !important;
+        }
+
+        .city-card-intl {
+            background: var(--green-bg) !important;
+            border-color: var(--green) !important;
+        }
+
+        .city-card-intl .city-name {
+            color: var(--green-dark);
+        }
+
         .city-country {
             font-size: 0.65rem;
             color: var(--gray-400);
@@ -1249,8 +1286,11 @@
                 <div class="city-card"><span class="city-flag">&#127482;&#127480;</span><div><span class="city-name">New York / New Jersey</span><div class="city-country">United States</div></div></div>
                 <div class="city-card"><span class="city-flag">&#127482;&#127480;</span><div><span class="city-name">Boston</span><div class="city-country">United States</div></div></div>
                 <div class="city-card"><span class="city-flag">&#127482;&#127480;</span><div><span class="city-name">Philadelphia</span><div class="city-country">United States</div></div></div>
-                <div class="city-card"><span class="city-flag">&#127464;&#127462;</span><div><span class="city-name">Canada</span><div class="city-country">Canada</div></div></div>
-                <div class="city-card"><span class="city-flag">&#127474;&#127485;</span><div><span class="city-name">Mexico</span><div class="city-country">Mexico</div></div></div>
+            </div>
+            <div class="cities-intl-label reveal reveal-d3">International</div>
+            <div class="cities-grid cities-grid-intl reveal reveal-d3">
+                <div class="city-card city-card-intl"><span class="city-flag">&#127464;&#127462;</span><div><span class="city-name">Canada</span></div></div>
+                <div class="city-card city-card-intl"><span class="city-flag">&#127474;&#127485;</span><div><span class="city-name">Mexico</span></div></div>
             </div>
             <p class="cities-note reveal">Coverage varies by city. Contact your Firefly rep for specific market availability.</p>
         </div>
