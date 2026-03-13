@@ -497,6 +497,95 @@
             max-width: 460px;
         }
 
+        /* ========== VIDEO SHOWCASE ========== */
+        .video-showcase {
+            background: var(--dark);
+            padding: 72px 0 64px;
+        }
+
+        .video-showcase-subtitle {
+            text-align: center;
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+
+        .video-carousel {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .carousel-track-wrapper {
+            overflow: hidden;
+            flex: 1;
+            border-radius: 12px;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            flex-shrink: 0;
+        }
+
+        .carousel-arrow {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.08);
+            color: var(--white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .carousel-arrow:hover {
+            background: var(--green);
+            border-color: var(--green);
+            color: var(--dark);
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255,255,255,0.25);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: var(--green);
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .carousel-arrow { width: 36px; height: 36px; }
+            .carousel-arrow svg { width: 18px; height: 18px; }
+            .video-showcase { padding: 48px 0 40px; }
+        }
+
         .btn-dark {
             display: inline-flex;
             align-items: center;
@@ -1033,6 +1122,45 @@
         </div>
     </div>
 
+    <!-- VIDEO SHOWCASE -->
+    <section class="video-showcase">
+        <div class="container">
+            <p class="video-showcase-subtitle">Check out how brands dominate major sport events with Firefly</p>
+            <div class="video-carousel">
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous video">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="carousel-track-wrapper">
+                    <div class="carousel-track">
+                        <div class="carousel-slide active">
+                            <div style="padding:56.25% 0 0 0;position:relative;">
+                                <iframe src="https://player.vimeo.com/video/1105904121?badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;" title="Firefly Campaign 1"></iframe>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div style="padding:56.25% 0 0 0;position:relative;">
+                                <iframe src="https://player.vimeo.com/video/1100576172?badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;" title="Firefly Campaign 2"></iframe>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div style="padding:56.25% 0 0 0;position:relative;">
+                                <iframe src="https://player.vimeo.com/video/1166067265?badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;" title="Firefly Campaign 3"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next video">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+            </div>
+            <div class="carousel-dots">
+                <button class="carousel-dot active" aria-label="Video 1"></button>
+                <button class="carousel-dot" aria-label="Video 2"></button>
+                <button class="carousel-dot" aria-label="Video 3"></button>
+            </div>
+        </div>
+    </section>
+
     <!-- COVERAGE -->
     <section class="coverage" id="coverage">
         <div class="container">
@@ -1339,6 +1467,32 @@
         }
 
         typewriter();
+    </script>
+
+    <!-- Video Carousel -->
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <script>
+    (function() {
+        const track = document.querySelector('.carousel-track');
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const leftBtn = document.querySelector('.carousel-arrow-left');
+        const rightBtn = document.querySelector('.carousel-arrow-right');
+        let current = 0;
+
+        function goTo(index) {
+            if (index < 0) index = slides.length - 1;
+            if (index >= slides.length) index = 0;
+            track.style.transform = 'translateX(-' + (index * 100) + '%)';
+            dots.forEach(d => d.classList.remove('active'));
+            dots[index].classList.add('active');
+            current = index;
+        }
+
+        leftBtn.addEventListener('click', () => goTo(current - 1));
+        rightBtn.addEventListener('click', () => goTo(current + 1));
+        dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+    })();
     </script>
 
 </body>
